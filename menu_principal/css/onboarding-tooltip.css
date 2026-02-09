@@ -1,0 +1,696 @@
+/**
+ * Estilos para Sistema de Onboarding - Tooltips
+ * Seguindo padrão visual do Salesdever
+ */
+
+/* Overlay de fundo - menos blur */
+.onboarding-overlay {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(1px);
+    z-index: 9999998 !important;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: auto;
+}
+
+.onboarding-overlay.show {
+    opacity: 1;
+}
+
+/* Garantir que overlay removido não bloqueie nada */
+.onboarding-overlay:not(.show) {
+    pointer-events: none;
+    display: none;
+}
+
+/* Tooltip Container */
+.onboarding-tooltip {
+    position: fixed !important;
+    width: 320px;
+    min-height: 180px;
+    background: rgba(13, 11, 26, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(165, 148, 255, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    z-index: 9999999 !important;
+    box-shadow: 0 8px 32px rgba(165, 148, 255, 0.2),
+                0 0 0 1px rgba(165, 148, 255, 0.1) inset;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    transform: scale(0.9) translateY(10px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    pointer-events: auto;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Tooltip dentro da Grazi - z-index mais alto */
+.onboarding-tooltip-inside-grazi {
+    z-index: 100050 !important;
+    position: fixed !important;
+}
+
+/* Tooltip dentro de modal - z-index máximo para sobrepor tudo */
+.onboarding-tooltip-inside-modal {
+    z-index: 999999 !important;
+    position: fixed !important;
+}
+
+.onboarding-overlay-inside-modal {
+    z-index: 999998 !important;
+    position: fixed !important;
+}
+
+/* Tooltip na página seleciona-assistente - z-index máximo para sobreposição */
+body:has(.header .title:contains("Selecione seus Assistentes")) .onboarding-tooltip,
+.seleciona-assistente-page .onboarding-tooltip {
+    z-index: 9999999 !important;
+    position: fixed !important;
+}
+
+body:has(.header .title:contains("Selecione seus Assistentes")) .onboarding-overlay,
+.seleciona-assistente-page .onboarding-overlay {
+    z-index: 9999998 !important;
+    position: fixed !important;
+}
+
+/* Tooltip na página de assistentes - z-index máximo para garantir visibilidade */
+body .onboarding-tooltip {
+    z-index: 9999999 !important;
+    position: fixed !important;
+}
+
+body .onboarding-overlay {
+    z-index: 9999998 !important;
+    position: fixed !important;
+}
+
+.onboarding-tooltip.show {
+    opacity: 1 !important;
+    transform: scale(1) translateY(0) !important;
+    visibility: visible !important;
+    transition: opacity 0s !important, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.onboarding-tooltip-center.show {
+    transform: translate(-50%, -50%) scale(1) !important;
+}
+
+/* Tooltip centralizado (boas-vindas) */
+.onboarding-tooltip-center {
+    width: 400px !important;
+    min-height: 220px !important;
+    text-align: center;
+}
+
+.onboarding-tooltip-center .onboarding-tooltip-icon {
+    margin: 0 auto 1rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.onboarding-tooltip-center .onboarding-tooltip-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.onboarding-tooltip-center .onboarding-tooltip-text {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.onboarding-tooltip-center .onboarding-tooltip-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.onboarding-tooltip-center .onboarding-tooltip-btn {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+}
+
+/* Responsividade - Telas menores */
+@media (max-width: 768px) {
+    .onboarding-tooltip {
+        width: calc(100vw - 40px) !important;
+        max-width: 320px !important;
+        min-height: 160px !important;
+        padding: 1.25rem !important;
+    }
+    
+    .onboarding-tooltip-center {
+        width: calc(100vw - 40px) !important;
+        max-width: 360px !important;
+        min-height: 200px !important;
+        padding: 1.25rem !important;
+    }
+    
+    .onboarding-tooltip-center .onboarding-tooltip-title {
+        font-size: 1.25rem !important;
+    }
+    
+    .onboarding-tooltip-center .onboarding-tooltip-text {
+        font-size: 0.9rem !important;
+    }
+    
+    .onboarding-tooltip-title {
+        font-size: 1.1rem !important;
+    }
+    
+    .onboarding-tooltip-text {
+        font-size: 0.9rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .onboarding-tooltip {
+        width: calc(100vw - 32px) !important;
+        max-width: 300px !important;
+        min-height: 140px !important;
+        padding: 1rem !important;
+    }
+    
+    .onboarding-tooltip-center {
+        width: calc(100vw - 32px) !important;
+        max-width: 320px !important;
+        min-height: 180px !important;
+        padding: 1rem !important;
+    }
+    
+    .onboarding-tooltip-center .onboarding-tooltip-title {
+        font-size: 1.1rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .onboarding-tooltip-center .onboarding-tooltip-text {
+        font-size: 0.85rem !important;
+        line-height: 1.5 !important;
+    }
+    
+    .onboarding-tooltip-title {
+        font-size: 1rem !important;
+    }
+    
+    .onboarding-tooltip-text {
+        font-size: 0.85rem !important;
+    }
+    
+    .onboarding-tooltip-btn {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+/* Seta do tooltip - posicionamento preciso */
+.onboarding-tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    z-index: 1;
+}
+
+.onboarding-tooltip-arrow[data-position="top"] {
+    bottom: 100%;
+    left: var(--arrow-offset, 50%);
+    transform: translateX(-50%);
+    border-bottom-color: rgba(165, 148, 255, 0.3);
+    border-top: none;
+}
+
+.onboarding-tooltip-arrow[data-position="bottom"] {
+    top: 100%;
+    left: var(--arrow-offset, 50%);
+    transform: translateX(-50%);
+    border-top-color: rgba(165, 148, 255, 0.3);
+    border-bottom: none;
+}
+
+.onboarding-tooltip-arrow[data-position="left"] {
+    right: 100%;
+    top: var(--arrow-offset, 50%);
+    transform: translateY(-50%);
+    border-right-color: rgba(165, 148, 255, 0.3);
+    border-left: none;
+}
+
+.onboarding-tooltip-arrow[data-position="right"] {
+    left: 100%;
+    top: var(--arrow-offset, 50%);
+    transform: translateY(-50%);
+    border-left-color: rgba(165, 148, 255, 0.3);
+    border-right: none;
+}
+
+/* Botão de fechar */
+.onboarding-tooltip-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(165, 148, 255, 0.2);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.onboarding-tooltip-close:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #fecaca;
+    transform: rotate(90deg);
+}
+
+/* Ícone */
+.onboarding-tooltip-icon {
+    text-align: center;
+    margin-bottom: 0.75rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a594ff;
+}
+
+.onboarding-tooltip-icon svg {
+    width: 32px;
+    height: 32px;
+    stroke: #a594ff;
+    fill: none;
+}
+
+/* Conteúdo */
+.onboarding-tooltip-content {
+    margin-bottom: 1.25rem;
+}
+
+.onboarding-tooltip-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    text-align: center;
+}
+
+.onboarding-tooltip-text {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+    text-align: center;
+    margin: 0;
+}
+
+/* Ações */
+.onboarding-tooltip-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.onboarding-tooltip-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Raleway', sans-serif;
+}
+
+.onboarding-tooltip-btn.understood {
+    background: linear-gradient(135deg, #a594ff 0%, #8b7aff 100%);
+    color: white;
+    border: 1px solid rgba(165, 148, 255, 0.5);
+    box-shadow: 0 4px 15px rgba(165, 148, 255, 0.3);
+}
+
+.onboarding-tooltip-btn.understood:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(165, 148, 255, 0.4);
+    background: linear-gradient(135deg, #b5a4ff 0%, #9d8aff 100%);
+}
+
+.onboarding-tooltip-btn.understood.finish {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    border-color: rgba(34, 197, 94, 0.5);
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+}
+
+.onboarding-tooltip-btn.understood.finish:hover {
+    background: linear-gradient(135deg, #2dd47e 0%, #1db954 100%);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+}
+
+.onboarding-tooltip-btn.back {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.onboarding-tooltip-btn.back:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateX(-2px);
+}
+
+.onboarding-tooltip-btn.disable-all {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.onboarding-tooltip-btn.disable-all:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.onboarding-tooltip-btn.next-page {
+    background: linear-gradient(135deg, #a594ff 0%, #8b7aff 100%);
+    color: white;
+    border: 1px solid rgba(165, 148, 255, 0.5);
+    font-weight: 600;
+}
+
+.onboarding-tooltip-btn.next-page:hover {
+    background: linear-gradient(135deg, #b5a4ff 0%, #9d8aff 100%);
+    box-shadow: 0 4px 15px rgba(165, 148, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Botão Abrir Grazi - estilo roxo */
+.onboarding-tooltip-btn.open-grazi {
+    background: linear-gradient(135deg, #a594ff 0%, #8b7aff 100%);
+    color: white;
+    border: 1px solid rgba(165, 148, 255, 0.5);
+    box-shadow: 0 4px 15px rgba(165, 148, 255, 0.3);
+    font-weight: 600;
+}
+
+.onboarding-tooltip-btn.open-grazi:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(165, 148, 255, 0.4);
+    background: linear-gradient(135deg, #b5a4ff 0%, #9d8aff 100%);
+}
+
+/* Botão de Reativação - Sempre visível */
+.onboarding-reactivate-btn {
+    position: fixed !important;
+    bottom: 8rem !important;
+    right: 2rem !important;
+    width: 56px !important;
+    height: 56px !important;
+    background: linear-gradient(135deg, #a594ff 0%, #8b7aff 100%) !important;
+    border: 1px solid rgba(165, 148, 255, 0.5) !important;
+    border-radius: 50% !important;
+    color: white !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 20px rgba(165, 148, 255, 0.4) !important;
+    transition: all 0.3s ease;
+    z-index: 99999999 !important;
+    font-family: 'Raleway', sans-serif;
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+.onboarding-reactivate-btn svg {
+    width: 32px !important;
+    height: 32px !important;
+    stroke: white;
+    fill: currentColor;
+    display: block;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
+}
+
+.onboarding-reactivate-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 30px rgba(165, 148, 255, 0.6);
+    background: linear-gradient(135deg, #b5a4ff 0%, #9d8aff 100%);
+}
+
+.onboarding-reactivate-btn:hover svg {
+    width: 32px !important;
+    height: 32px !important;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+    animation: lampGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes lampGlow {
+    0%, 100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+    }
+    50% {
+        opacity: 0.9;
+        filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
+    }
+}
+
+.onboarding-reactivate-btn:active {
+    transform: translateY(-1px) scale(1);
+}
+
+/* Tooltip do botão de reativação */
+.onboarding-reactivate-btn:hover::before {
+    content: 'Ver Tutoriais';
+    position: absolute;
+    right: 70px;
+    white-space: nowrap;
+    background: rgba(13, 11, 26, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(165, 148, 255, 0.3);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    color: white;
+    pointer-events: none;
+    animation: fadeInRight 0.3s ease;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .onboarding-tooltip {
+        width: calc(100vw - 2rem);
+        max-width: 320px;
+        left: 1rem !important;
+        right: 1rem;
+    }
+
+    .onboarding-reactivate-btn {
+        bottom: 7rem;
+        right: 1rem;
+        width: 48px;
+        height: 48px;
+    }
+}
+
+/* Animação de pulso no elemento alvo - destaque mais visível */
+.onboarding-target-highlight {
+    position: relative;
+    z-index: 9996 !important;
+    animation: onboardingPulse 2s ease-in-out infinite;
+    outline: 2px solid rgba(165, 148, 255, 0.6) !important;
+    outline-offset: 2px;
+    border-radius: 8px;
+}
+
+/* Seta animada apontando para elementos */
+.onboarding-animated-arrow-container {
+    pointer-events: none;
+    user-select: none;
+    display: flex !important;
+    visibility: visible !important;
+    align-items: center;
+    gap: 10px;
+}
+
+.onboarding-animated-arrow {
+    font-size: 50px;
+    color: #A594FF;
+    font-weight: bold;
+    text-shadow: 0 0 15px rgba(165, 148, 255, 1),
+                 0 0 30px rgba(165, 148, 255, 0.6);
+    animation: arrowBounceHorizontal 1s ease-in-out infinite;
+    pointer-events: none;
+    user-select: none;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    line-height: 1;
+}
+
+.onboarding-click-here-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #A594FF;
+    text-shadow: 0 0 10px rgba(165, 148, 255, 0.8),
+                 0 0 20px rgba(165, 148, 255, 0.5);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    animation: pulseText 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseText {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes arrowBounceHorizontal {
+    0%, 100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(15px);
+        opacity: 0.9;
+    }
+}
+
+/* Spotlight na Grazi - feixe de luz */
+.onboarding-grazi-spotlight {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+.onboarding-spotlight-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(3px);
+    /* clip-path será definido via JavaScript para deixar área da Grazi visível */
+}
+
+.onboarding-spotlight-light {
+    position: absolute;
+    background: transparent;
+    border: 3px solid rgba(165, 148, 255, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(165, 148, 255, 0.6),
+                0 0 60px rgba(165, 148, 255, 0.4),
+                0 0 90px rgba(165, 148, 255, 0.2);
+    animation: spotlightPulse 2s ease-in-out infinite;
+    pointer-events: none;
+    /* Não sobrepor o botão, apenas ao redor */
+}
+
+.onboarding-spotlight-click-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #A594FF;
+    text-shadow: 0 0 10px rgba(165, 148, 255, 0.9),
+                 0 0 20px rgba(165, 148, 255, 0.6),
+                 0 0 30px rgba(165, 148, 255, 0.3);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    animation: pulseText 1.5s ease-in-out infinite;
+    z-index: 10001;
+}
+
+@keyframes spotlightPulse {
+    0%, 100% {
+        box-shadow: 0 0 30px rgba(165, 148, 255, 0.6),
+                    0 0 60px rgba(165, 148, 255, 0.4),
+                    inset 0 0 20px rgba(165, 148, 255, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(165, 148, 255, 0.8),
+                    0 0 80px rgba(165, 148, 255, 0.6),
+                    inset 0 0 30px rgba(165, 148, 255, 0.3);
+    }
+}
+
+/* Bloqueador de interações */
+.onboarding-interaction-blocker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background: transparent;
+    pointer-events: auto;
+    cursor: not-allowed;
+}
+
+/* Garantir que botão da Grazi fique acima do bloqueador e seja clicável */
+button.insights-btn,
+.insights-btn {
+    position: relative !important;
+    z-index: 10002 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+@keyframes onboardingPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(165, 148, 255, 0.6),
+                    0 0 0 0 rgba(165, 148, 255, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(165, 148, 255, 0.3),
+                    0 0 0 8px rgba(165, 148, 255, 0.1);
+    }
+}
+

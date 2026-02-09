@@ -1,0 +1,10 @@
+.env
+.env.*
+**/node_modules/
+**/.venv/
+**/__pycache__/
+.pytest_cache/
+.DS_Store
+flow_editor_frontend/dist/
+.cursor/debug.log
+flow_editor_snapshots/snapshot_TEMP_*.json

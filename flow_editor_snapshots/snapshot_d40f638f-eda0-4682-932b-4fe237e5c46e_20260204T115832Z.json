@@ -1,0 +1,520 @@
+{
+  "assistente_id": "d40f638f-eda0-4682-932b-4fe237e5c46e",
+  "tenant_id": "8404034c-d3fd-4ef9-b70b-f4362e59f242",
+  "saved_at": "2026-02-04T11:58:32.395Z",
+  "blocks": [
+    {
+      "id": "block_1770189236843_4ptohwp64",
+      "type": "primeira_mensagem",
+      "content": "Oi! Aqui é da equipe Markép, estou falando com {{nome}}??",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null
+    },
+    {
+      "id": "block_1770189333543_v1sayraw0",
+      "type": "texto",
+      "content": "Opa, tudo bem {{nome}}?!! Aqui é a Maria!! Assistente do Felicíssimo, do Mark ép Promotores. Vi que você acabou de se cadastrar na nossa comunidade, e estou te ligando para te dar as boas-vindas e te fazer um convite especial!! Tem um minutinho? Prometo ser breve!!!",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null
+    },
+    {
+      "id": "block_1770189349928_7fji7xtwo",
+      "type": "aguardar",
+      "content": "resposta_inicial",
+      "timeout": 30,
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null
+    },
+    {
+      "id": "block_1770189377171_dc150o7z7",
+      "type": "ramificacoes",
+      "content": "Como o lead respondeu?",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "analyzeVariable": "{{ultima_resposta}}",
+      "routes": [
+        {
+          "id": "route_1770189377171_1",
+          "label": "Pode falar",
+          "color": "#22c55e",
+          "keywords": [
+            "sim",
+            "pode",
+            "claro",
+            "quero"
+          ],
+          "response": "Ótimo! Vamos continuar...",
+          "destinationType": "continue",
+          "gotoBlockId": null
+        },
+        {
+          "id": "route_1770189377171_2",
+          "label": "não posso",
+          "color": "#ef4444",
+          "keywords": [
+            "trabalhando",
+            "reunião",
+            "depois"
+          ],
+          "response": "Entendi! Sem problemas.",
+          "destinationType": "continue",
+          "gotoBlockId": null
+        }
+      ],
+      "fallback": {
+        "label": "Outros",
+        "response": "Pode repetir? Não entendi.",
+        "destinationType": "goto",
+        "gotoBlockId": null
+      }
+    },
+    {
+      "id": "block_1770189638976_92jkck00m",
+      "type": "texto",
+      "content": "Perfeito {{nome}}, sou do time de sucesso da comunidade, meu objetivo aqui é fazer você alcançar seus objetivos, me conta um pouco mais, o que te fez cadastrar em nossa plataforma, o que você está esperando do markép promotores?",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770189377171_dc150o7z7",
+      "routeId": "route_1770189377171_1"
+    },
+    {
+      "id": "block_1770189645557_y7epoye8g",
+      "type": "texto",
+      "content": "{{nome}} é realmente muito rápido, eu sou do time de sucesso da comunidade, só queria saber o que te fez procurar nossa comunidade, e entender o que você espera do markép, asism eu consigo te acompanhar pra alcançar esse resultado...",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770189377171_dc150o7z7",
+      "routeId": "route_1770189377171_2"
+    },
+    {
+      "id": "block_1770189948330_3hldhfr1i",
+      "type": "aguardar",
+      "content": "Se o lead disser que realmente NÃO PODE falar, ENCERRE A LIGAÇÃO EDUCADAMENTE",
+      "timeout": 30,
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770189377171_dc150o7z7",
+      "routeId": "route_1770189377171_2",
+      "gotoBlockId": "block_1770190129544_m0fkjvfmt"
+    },
+    {
+      "id": "block_1770190037610_n1gt0nfn9",
+      "type": "encerrar",
+      "content": "Tranquilo! Respeito totalmente. Se mudar de ideia, o convite tá de pé. Obrigada pelo seu tempo e até mais!",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770189377171_dc150o7z7",
+      "routeId": "route_1770189377171_2"
+    },
+    {
+      "id": "block_1770190810293_5qz4jd5y0",
+      "type": "aguardar",
+      "content": "motivacao_cadastro",
+      "timeout": 30,
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770189377171_dc150o7z7",
+      "routeId": "route_1770189377171_1"
+    },
+    {
+      "id": "block_1770190841868_n50nyuuik",
+      "type": "ramificacoes",
+      "content": "Como o lead respondeu?",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "analyzeVariable": "{{ultima_resposta}}",
+      "routes": [
+        {
+          "id": "route_1770190841868_1",
+          "label": "Renda Extra",
+          "color": "#22c55e",
+          "keywords": [
+            "dinheiro",
+            "grana",
+            "extra",
+            "ganhar"
+          ],
+          "response": "Ótimo! Vamos continuar...",
+          "destinationType": "continue",
+          "gotoBlockId": null
+        },
+        {
+          "id": "route_1770190841868_2",
+          "label": "Indicação",
+          "color": "#ef4444",
+          "keywords": [
+            "indicou",
+            "amigo",
+            "colega"
+          ],
+          "response": "Entendi! Sem problemas.",
+          "destinationType": "continue",
+          "gotoBlockId": null
+        },
+        {
+          "id": "route_1770191114617_ucsvnp87d",
+          "label": "Curiosidade",
+          "color": "#3b82f6",
+          "keywords": [
+            "curioso",
+            "saber",
+            "conhecer",
+            "vi",
+            "anuncio"
+          ],
+          "response": "",
+          "destinationType": "continue",
+          "gotoBlockId": null
+        }
+      ],
+      "fallback": {
+        "label": "Outros",
+        "response": "Pode repetir? Não entendi.",
+        "destinationType": "loop",
+        "gotoBlockId": null
+      }
+    },
+    {
+      "id": "block_1770191846143_8837x90i3",
+      "type": "texto",
+      "content": "Entendi! Pois é, esse é o objetivo mesmo, viu? Sabe o que é mais legal? Você não precisa se dedicar muito, é literalmente usar o que você já faz no dia a dia, só que agora ganhando por isso.",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770190841868_n50nyuuik",
+      "routeId": "route_1770190841868_1",
+      "gotoBlockId": "block_1770192169145_d95jlr4w6"
+    },
+    {
+      "id": "block_1770191850453_280hnavsn",
+      "type": "texto",
+      "content": "Que bacana! Olha, quem te indicou conhece bem o potencial daqui. Provavelmente já tá ganhando uma graninha boa.",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770190841868_n50nyuuik",
+      "routeId": "route_1770190841868_2",
+      "gotoBlockId": "block_1770192169145_d95jlr4w6"
+    },
+    {
+      "id": "block_1770191854832_dknsk0py9",
+      "type": "texto",
+      "content": "Legal! Sabe, curiosidade é o primeiro passo de quem faz acontecer. Deixa eu te explicar melhor então como funciona.",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770190841868_n50nyuuik",
+      "routeId": "route_1770191114617_ucsvnp87d",
+      "gotoBlockId": "block_1770192169145_d95jlr4w6"
+    },
+    {
+      "id": "block_1770192124998_kmlgo7bai",
+      "type": "texto",
+      "content": "Entendi! Que bom que você está aqui. Deixa eu te contar o que você pode conquistar com a gente.",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770190841868_n50nyuuik",
+      "routeId": "fallback",
+      "gotoBlockId": "block_1770192169145_d95jlr4w6"
+    },
+    {
+      "id": "block_1770192169145_d95jlr4w6",
+      "type": "texto",
+      "content": "{{nome}}, me fala uma coisa, hoje, mudaria algo na sua vida se você ganhasse mil e quinhentos reais por uma simples indicação?",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null
+    },
+    {
+      "id": "block_1770192263752_itkjojciy",
+      "type": "aguardar",
+      "content": "resposta_valor",
+      "timeout": 30,
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null
+    },
+    {
+      "id": "block_1770192311354_7h4xsies8",
+      "type": "texto",
+      "content": "Então {{nome}}, o motivo da minha ligação é te convidar para nossa live de segunda a sexta, às dezoito horas, com o Felicíssimo. Lá você vai aprender a identificar oportunidades e ver casos reais. Hoje é um bom dia pra você?",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null
+    },
+    {
+      "id": "block_1770192328690_ef3q5m1nx",
+      "type": "aguardar",
+      "content": " confirmacao_live\n",
+      "timeout": 30,
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null
+    },
+    {
+      "id": "block_1770192404979_mxdkgqh3q",
+      "type": "ramificacoes",
+      "content": "Como o lead respondeu?",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "analyzeVariable": "{{ultima_resposta}}",
+      "routes": [
+        {
+          "id": "route_1770192404979_1",
+          "label": "Hoje sim",
+          "color": "#22c55e",
+          "keywords": [
+            "sim",
+            "pode",
+            "vou",
+            "beleza",
+            "combinado",
+            "ok"
+          ],
+          "response": "Ótimo! Vamos continuar...",
+          "destinationType": "goto",
+          "gotoBlockId": "block_1770193232564_8266mhwex"
+        },
+        {
+          "id": "route_1770192404979_2",
+          "label": "Outro dia",
+          "color": "#ef4444",
+          "keywords": [
+            "não",
+            "hoje não",
+            "outro dia",
+            "amanhã",
+            "segunda",
+            "terça",
+            "quarta",
+            "quinta",
+            "sexta"
+          ],
+          "response": "Entendi! Sem problemas.",
+          "destinationType": "continue",
+          "gotoBlockId": null
+        },
+        {
+          "id": "route_1770192704462_dsgpfcs7z",
+          "label": "fim de semana",
+          "color": "#3b82f6",
+          "keywords": [
+            "sábado",
+            "sabado",
+            "domingo"
+          ],
+          "response": "",
+          "destinationType": "continue",
+          "gotoBlockId": null
+        }
+      ],
+      "fallback": {
+        "label": "Outros",
+        "response": "Pode repetir? Não entendi.",
+        "destinationType": "loop",
+        "gotoBlockId": null
+      }
+    },
+    {
+      "id": "block_1770192878217_0f52a8sn2",
+      "type": "texto",
+      "content": "Maravilha! Vou mandar o link no WhatsApp.",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770192404979_mxdkgqh3q",
+      "routeId": "route_1770192404979_1"
+    },
+    {
+      "id": "block_1770192882179_swzaysh0q",
+      "type": "texto",
+      "content": "Entendo {{nome}}, qual dia da semana fica melhor para você? Lembrando que é extremamente importante que você participe o quanto antes da live pra já pegar o embalo e ganhar o dinheiro da indicação nesse primeiro mês.",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770192404979_mxdkgqh3q",
+      "routeId": "route_1770192404979_2"
+    },
+    {
+      "id": "block_1770192885836_202zbe9h9",
+      "type": "texto",
+      "content": "No fim de semana não tem live. Segunda às 18h funciona?",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770192404979_mxdkgqh3q",
+      "routeId": "route_1770192704462_dsgpfcs7z"
+    },
+    {
+      "id": "block_1770193025212_askkwc55y",
+      "type": "tool",
+      "toolType": "enviar_link_whatsapp",
+      "content": "Executar ferramenta",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770192404979_mxdkgqh3q",
+      "routeId": "route_1770192404979_1",
+      "gotoBlockId": "block_1770193100122_vof0phqjo"
+    },
+    {
+      "id": "block_1770193100122_vof0phqjo",
+      "type": "texto",
+      "content": "Acabei de enviar. Me confirma por gentileza se chegou para você!\n",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null
+    },
+    {
+      "id": "block_1770193187137_v1u326ne8",
+      "type": "aguardar",
+      "content": "confirmacao_link",
+      "timeout": 30,
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null
+    },
+    {
+      "id": "block_1770193191627_q2v02au5r",
+      "type": "ramificacoes",
+      "content": "Como o lead respondeu?",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "analyzeVariable": "{{ultima_resposta}}",
+      "routes": [
+        {
+          "id": "route_1770193191627_1",
+          "label": "Link chegou?",
+          "color": "#22c55e",
+          "keywords": [
+            "sim",
+            "chegou",
+            "recebi",
+            "vi",
+            "ok"
+          ],
+          "response": "Ótimo! Vamos continuar...",
+          "destinationType": "goto",
+          "gotoBlockId": "block_1770194123662_cqe994vsi"
+        },
+        {
+          "id": "route_1770193191627_2",
+          "label": "Não chegou",
+          "color": "#ef4444",
+          "keywords": [
+            "não",
+            "nao",
+            "nao chegou",
+            "nada"
+          ],
+          "response": "Entendi! Sem problemas.",
+          "destinationType": "continue",
+          "gotoBlockId": null
+        }
+      ],
+      "fallback": {
+        "label": "Outros",
+        "response": "Pode repetir? Não entendi.",
+        "destinationType": "loop",
+        "gotoBlockId": null
+      }
+    },
+    {
+      "id": "block_1770193232564_8266mhwex",
+      "type": "aguardar",
+      "content": "dia_escolhido",
+      "timeout": 30,
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770192404979_mxdkgqh3q",
+      "routeId": "route_1770192404979_2",
+      "gotoBlockId": "block_1770193025212_askkwc55y"
+    },
+    {
+      "id": "block_1770193426423_8gf9qd4xv",
+      "type": "aguardar",
+      "content": "Aguardando resposta...",
+      "timeout": 30,
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770192404979_mxdkgqh3q",
+      "routeId": "route_1770192704462_dsgpfcs7z",
+      "gotoBlockId": "block_1770192882179_swzaysh0q"
+    },
+    {
+      "id": "block_1770193778073_a3ipqvkpw",
+      "type": "texto",
+      "content": "Perfeito! Então te espero às dezoito horas, viu! Vai ser um encontro muito bacana, tenho certeza que você vai gostar. Qualquer dúvida antes da live é só responder lá no WhatsApp. Bem-vindo ao Mark ép Promotores! Até mais e boa live!",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770193191627_q2v02au5r",
+      "routeId": "route_1770193191627_1"
+    },
+    {
+      "id": "block_1770193793108_fdlx5zsp2",
+      "type": "texto",
+      "content": "Deixa eu enviar de novo.",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770193191627_q2v02au5r",
+      "routeId": "route_1770193191627_2"
+    },
+    {
+      "id": "block_1770194123662_cqe994vsi",
+      "type": "encerrar",
+      "content": "Até logo!",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null
+    },
+    {
+      "id": "block_1770194159336_zbfrt7pyh",
+      "type": "tool",
+      "toolType": "enviar_link_whatsapp",
+      "content": "Executar ferramenta",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770193191627_q2v02au5r",
+      "routeId": "route_1770193191627_2"
+    },
+    {
+      "id": "block_1770194246608_2e1oik0gb",
+      "type": "texto",
+      "content": "Pronto, enviei novamente. Agora foi?",
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770193191627_q2v02au5r",
+      "routeId": "route_1770193191627_2"
+    },
+    {
+      "id": "block_1770194254263_f7w76fzpf",
+      "type": "aguardar",
+      "content": "Aguardando resposta...",
+      "timeout": 30,
+      "nextBlock": null,
+      "parentConditionId": null,
+      "branchType": null,
+      "parentRouterId": "block_1770193191627_q2v02au5r",
+      "routeId": "route_1770193191627_2"
+    }
+  ]
+}

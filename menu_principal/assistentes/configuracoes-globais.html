@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configurações Globais do Assistente</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: linear-gradient(135deg, #040017 0%, #0f0624 50%, #1a0f35 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 18px;
+    }
+    
+    /* Light Theme - Padrão branco */
+    :root:not(.dark) body,
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f0f4f8 100%);
+      color: #1a1a1a;
+    }
+
+    body.light {
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f0f4f8 100%);
+      color: #1a1a1a;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 20px 24px;
+      background: rgba(165, 148, 255, 0.08);
+      border: 1px solid rgba(165, 148, 255, 0.25);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      margin-bottom: 20px;
+      box-shadow: 0 8px 32px rgba(165, 148, 255, 0.1);
+    }
+    
+    body.light .header {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(165, 148, 255, 0.3);
+      box-shadow: 0 4px 20px rgba(165, 148, 255, 0.15);
+    }
+    .header h1 { font-size: 18px; font-weight: 800; color: #fff; }
+    .header small { display: block; margin-top: 4px; color: rgba(255,255,255,0.6); font-size: 12px; }
+    
+    body.light .header h1 { color: #1a1a1a; }
+    body.light .header small { color: rgba(0,0,0,0.6); }
+    .actions { display: flex; gap: 10px; }
+    .btn {
+      padding: 12px 20px;
+      border-radius: 14px;
+      border: 2px solid rgba(165, 148, 255, 0.3);
+      background: rgba(165, 148, 255, 0.1);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      background: rgba(165, 148, 255, 0.2);
+      border-color: rgba(165, 148, 255, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(165, 148, 255, 0.3);
+    }
+    
+    .btn.primary {
+      border-color: rgba(165, 148, 255, 0.6);
+      background: linear-gradient(135deg, #A594FF, #667eea);
+      box-shadow: 0 4px 16px rgba(165, 148, 255, 0.4);
+    }
+    
+    .btn.primary:hover {
+      box-shadow: 0 6px 24px rgba(165, 148, 255, 0.5);
+      transform: translateY(-2px);
+    }
+    
+    body.light .btn {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(165, 148, 255, 0.4);
+      color: #1a1a1a;
+    }
+    
+    body.light .btn:hover {
+      background: #fff;
+      border-color: rgba(165, 148, 255, 0.6);
+    }
+    
+    body.light .btn.primary {
+      color: #fff;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .card {
+      background: rgba(165, 148, 255, 0.06);
+      border: 1px solid rgba(165, 148, 255, 0.25);
+      border-radius: 18px;
+      padding: 20px;
+      backdrop-filter: blur(12px);
+      min-height: 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(165, 148, 255, 0.08);
+    }
+    
+    .card:hover {
+      border-color: rgba(165, 148, 255, 0.4);
+      box-shadow: 0 6px 24px rgba(165, 148, 255, 0.15);
+      transform: translateY(-2px);
+    }
+    
+    body.light .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: rgba(165, 148, 255, 0.3);
+      box-shadow: 0 2px 12px rgba(165, 148, 255, 0.1);
+    }
+    
+    body.light .card:hover {
+      border-color: rgba(165, 148, 255, 0.5);
+      box-shadow: 0 4px 20px rgba(165, 148, 255, 0.2);
+    }
+    .card h2 { font-size: 15px; font-weight: 800; margin-bottom: 12px; color: #fff; }
+    .field { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+    .field label { color: rgba(255,255,255,0.8); font-weight: 700; font-size: 13px; }
+    
+    body.light .card h2 { color: #1a1a1a; }
+    body.light .field label { color: rgba(0,0,0,0.8); }
+    .field textarea, .field input {
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 2px solid rgba(165, 148, 255, 0.3);
+      background: rgba(165, 148, 255, 0.05);
+      color: #fff;
+      outline: none;
+      font-family: 'Raleway', sans-serif;
+      transition: all 0.3s ease;
+    }
+    
+    .field textarea:focus, .field input:focus {
+      border-color: rgba(165, 148, 255, 0.6);
+      background: rgba(165, 148, 255, 0.1);
+      box-shadow: 0 0 0 4px rgba(165, 148, 255, 0.1);
+    }
+    
+    body.light .field textarea, body.light .field input {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(165, 148, 255, 0.4);
+      color: #1a1a1a;
+    }
+    
+    body.light .field textarea:focus, body.light .field input:focus {
+      border-color: rgba(165, 148, 255, 0.7);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(165, 148, 255, 0.15);
+    }
+    .field textarea { min-height: 140px; resize: vertical; }
+    .hint { margin-top: 8px; font-size: 12px; color: rgba(165, 148, 255, 0.7); }
+    .full { grid-column: 1 / -1; }
+    .status {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(165, 148, 255, 0.9);
+      background: rgba(165, 148, 255, 0.1);
+      border: 1px solid rgba(165, 148, 255, 0.2);
+    }
+    
+    body.light .hint { color: rgba(165, 148, 255, 0.8); }
+    body.light .status {
+      color: rgba(165, 148, 255, 1);
+      background: rgba(165, 148, 255, 0.15);
+      border-color: rgba(165, 148, 255, 0.3);
+    }
+    @media (max-width: 950px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <script src="../theme-system.js?v=2"></script>
+  <script>
+    // Sincronizar com sistema de tema global
+    function syncTheme() {
+      const theme = localStorage.getItem('saas-theme') || 'light';
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.body.classList.remove('light');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.body.classList.add('light');
+      }
+    }
+
+    // Sincronizar ao carregar
+    syncTheme();
+
+    // Sincronizar quando mudar em outra aba/janela
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'saas-theme') {
+        syncTheme();
+      }
+    });
+
+    // Escutar mudanças de tema do sistema global
+    window.addEventListener('theme-change', () => {
+      syncTheme();
+    });
+  </script>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>Configurações globais do assistente</h1>
+        <small id="subtitle">assistant_id: -</small>
+      </div>
+      <div class="actions">
+        <button class="btn" onclick="reloadProfile()">Recarregar</button>
+        <button class="btn primary" onclick="saveProfile()">Salvar</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Identidade</h2>
+        <div class="field">
+          <label for="identity">Identidade / Papel da IA</label>
+          <textarea id="identity" placeholder="Quem é a IA, missão, contexto..."></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Personalidade</h2>
+        <div class="field">
+          <label for="personality">Voz, tom e diretrizes</label>
+          <textarea id="personality" placeholder="Tom de voz, postura, ritmo, diretrizes..."></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Pronúncia</h2>
+        <div class="field">
+          <label for="phonetic_rules">Regras de pronúncia / fonética</label>
+          <textarea id="phonetic_rules" placeholder="@ = arroba&#10;% = por cento&#10;5 = cinco"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Regras</h2>
+        <div class="field">
+          <label for="absolute_rules">Regras absolutas</label>
+          <textarea id="absolute_rules" placeholder="✅ SEMPRE..., ❌ NUNCA..."></textarea>
+        </div>
+      </div>
+
+      <div class="card full">
+        <h2>Expressões naturais</h2>
+        <div class="field">
+          <label for="natural_expressions">Expressões / conectivos</label>
+          <textarea id="natural_expressions" placeholder="Confirmações, transições, empatia..."></textarea>
+        </div>
+      </div>
+
+      <div class="card full">
+        <h2>Agendamento</h2>
+        <div class="field">
+          <label for="scheduling_rules">Regras de agendamento (JSON)</label>
+          <textarea id="scheduling_rules" placeholder='{"dias_uteis":[1,2,3,4,5],"janela":{"inicio":"09:00","fim":"18:00"}}'></textarea>
+          <div class="hint">Dica: se preferir, deixe vazio e o sistema mantém {}.</div>
+        </div>
+      </div>
+
+      <div class="card full">
+        <h2>Velocidade da voz</h2>
+        <div class="field">
+          <label for="voice_speed">Velocidade da fala do assistente</label>
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <input type="range" id="voice_speed" min="0.5" max="2" step="0.1" value="1" style="flex: 1; min-width: 120px; accent-color: #A594FF;">
+            <span id="voice_speed_value" style="font-weight: 700; min-width: 3rem;">1</span>
+            <span style="color: rgba(255,255,255,0.6); font-size: 12px;">(1 = normal)</span>
+          </div>
+          <div class="hint">Mais lento (0.5) ↔ Mais rápido (2). Ajuste a velocidade da fala do assistente.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status" id="status"></div>
+  </div>
+
+  <script>
+    // Sincronizar tema com o sistema principal - Padrão: light (branco)
+    function syncTheme() {
+      const theme = localStorage.getItem('saas-theme') || 'light'; // Padrão é light
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.body.classList.remove('light');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.body.classList.add('light');
+      }
+    }
+    
+    // Escutar mudanças de tema
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'saas-theme') syncTheme();
+    });
+    
+    window.addEventListener('theme-change', () => syncTheme());
+    
+    // Aplicar tema inicial
+    syncTheme();
+    
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    function loadSelectedAssistente() {
+      const raw = localStorage.getItem('sd_selected_assistente');
+      if (raw) {
+        try { return JSON.parse(raw); } catch (e) { return null; }
+      }
+      return null;
+    }
+
+    function resolveAssistantId() {
+      return getQueryParam('assistente_id') || getQueryParam('assistant_id') || (loadSelectedAssistente()?.id) || (loadSelectedAssistente()?.assistente_id) || '';
+    }
+
+    function resolveTenantId() {
+      return getQueryParam('tenant_id') || localStorage.getItem('tenant_id') || (loadSelectedAssistente()?.tenant_id || loadSelectedAssistente()?.tenantId) || '';
+    }
+
+    const assistantId = resolveAssistantId();
+    const tenantId = resolveTenantId();
+    document.getElementById('subtitle').textContent = `assistant_id: ${assistantId || '-'}`;
+
+    function setStatus(msg) {
+      document.getElementById('status').textContent = msg || '';
+    }
+
+    function setForm(profile) {
+      document.getElementById('identity').value = profile?.identity || '';
+      document.getElementById('personality').value = profile?.personality || '';
+      document.getElementById('phonetic_rules').value = profile?.phonetic_rules || '';
+      document.getElementById('absolute_rules').value = profile?.absolute_rules || '';
+      document.getElementById('natural_expressions').value = profile?.natural_expressions || '';
+      const sr = profile?.scheduling_rules || {};
+      document.getElementById('scheduling_rules').value = Object.keys(sr).length ? JSON.stringify(sr, null, 2) : '';
+      const speed = profile?.voice_speed;
+      const speedNum = speed != null && !isNaN(Number(speed)) ? Math.max(0.5, Math.min(2, Number(speed))) : 1;
+      document.getElementById('voice_speed').value = speedNum;
+      document.getElementById('voice_speed_value').textContent = String(speedNum);
+    }
+
+    function setVoiceSpeedOnly(value) {
+      const speedNum = value != null && !isNaN(Number(value)) ? Math.max(0.5, Math.min(2, Number(value))) : 1;
+      document.getElementById('voice_speed').value = speedNum;
+      document.getElementById('voice_speed_value').textContent = String(speedNum);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const speedEl = document.getElementById('voice_speed');
+      const valueEl = document.getElementById('voice_speed_value');
+      if (speedEl && valueEl) {
+        speedEl.addEventListener('input', function() {
+          valueEl.textContent = speedEl.value;
+        });
+      }
+    });
+
+    async function reloadProfile() {
+      if (!assistantId) {
+        alert('assistant_id não encontrado (use ?assistente_id=...)');
+        return;
+      }
+      setStatus('Carregando...');
+      const qs = tenantId ? `?tenant_id=${encodeURIComponent(tenantId)}` : '';
+      const [profileRes, voiceRes] = await Promise.all([
+        fetch(`/api/assistants/${encodeURIComponent(assistantId)}/profile${qs}`),
+        fetch(`/api/assistants/${encodeURIComponent(assistantId)}/voice-settings`),
+      ]);
+      const profileJson = await profileRes.json();
+      setForm(profileJson.profile || {});
+      try {
+        const voiceJson = await voiceRes.json();
+        if (voiceJson.voice_speed != null) setVoiceSpeedOnly(voiceJson.voice_speed);
+      } catch (_) {}
+      setStatus('Carregado.');
+    }
+
+    async function saveProfile() {
+      if (!assistantId) {
+        alert('assistant_id não encontrado (use ?assistente_id=...)');
+        return;
+      }
+      let schedulingRules = {};
+      const raw = document.getElementById('scheduling_rules').value.trim();
+      if (raw) {
+        try {
+          schedulingRules = JSON.parse(raw);
+        } catch (e) {
+          alert('JSON inválido em "Regras de agendamento".');
+          return;
+        }
+      }
+
+      const speedVal = parseFloat(document.getElementById('voice_speed').value);
+      const voiceSpeed = isNaN(speedVal) ? 1 : Math.max(0.5, Math.min(2, speedVal));
+
+      const payload = {
+        identity: document.getElementById('identity').value,
+        personality: document.getElementById('personality').value,
+        phonetic_rules: document.getElementById('phonetic_rules').value,
+        absolute_rules: document.getElementById('absolute_rules').value,
+        natural_expressions: document.getElementById('natural_expressions').value,
+        scheduling_rules: schedulingRules,
+        voice_speed: voiceSpeed,
+      };
+
+      setStatus('Salvando...');
+      const qs = tenantId ? `?tenant_id=${encodeURIComponent(tenantId)}` : '';
+      await fetch(`/api/assistants/${encodeURIComponent(assistantId)}/voice-settings`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ voice_speed: voiceSpeed }),
+      });
+      const res = await fetch(`/api/assistants/${encodeURIComponent(assistantId)}/profile${qs}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const txt = await res.text();
+        setStatus('');
+        alert(`Erro ao salvar: ${txt}`);
+        return;
+      }
+      setStatus('Salvo com sucesso.');
+    }
+
+    // boot
+    reloadProfile().catch(() => setStatus('Falha ao carregar (verifique SUPABASE_KEY).'));
+  </script>
+</body>
+</html>
+

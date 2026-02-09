@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo ao Salesdever! - Tour Interativo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(135deg, #0a0420 0%, #1a0a3a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(165, 148, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.12) 0%, transparent 50%);
+            animation: backgroundFloat 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(3%, 3%); }
+        }
+
+        .welcome-container {
+            background: rgba(13, 11, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(165, 148, 255, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(165, 148, 255, 0.2),
+                        0 0 0 1px rgba(165, 148, 255, 0.1) inset;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, rgba(165, 148, 255, 0.2), rgba(102, 126, 234, 0.2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(165, 148, 255, 0.3);
+        }
+
+        .welcome-icon svg {
+            width: 36px;
+            height: 36px;
+            color: #A594FF;
+        }
+
+        .welcome-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, #ffffff, #A594FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .welcome-subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.25rem;
+            font-weight: 400;
+        }
+
+        .welcome-description {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-features {
+            text-align: left;
+            margin-bottom: 2rem;
+            padding: 1.25rem;
+            background: rgba(165, 148, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(165, 148, 255, 0.1);
+        }
+
+        .welcome-features h3 {
+            font-size: 1rem;
+            color: #A594FF;
+            margin-bottom: 0.875rem;
+            text-align: center;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            margin-bottom: 0.625rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.875rem;
+        }
+
+        .feature-item svg {
+            width: 20px;
+            height: 20px;
+            color: #A594FF;
+            flex-shrink: 0;
+        }
+
+        .welcome-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .welcome-btn {
+            flex: 1;
+            padding: 0.875rem 1.5rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .welcome-btn-primary {
+            background: linear-gradient(135deg, #A594FF, #667EEA);
+            color: white;
+            box-shadow: 0 4px 16px rgba(165, 148, 255, 0.3);
+        }
+
+        .welcome-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(165, 148, 255, 0.4);
+        }
+
+        .welcome-btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .welcome-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Tablets */
+        @media (max-width: 1024px) {
+            .welcome-container {
+                max-width: 450px;
+                padding: 1.75rem;
+            }
+
+            .welcome-title {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Tablets pequenos e mobile */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .welcome-container {
+                max-width: 100%;
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+
+            .welcome-icon {
+                width: 56px;
+                height: 56px;
+                margin-bottom: 1.25rem;
+            }
+
+            .welcome-icon svg {
+                width: 32px;
+                height: 32px;
+            }
+
+            .welcome-title {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+
+            .welcome-description {
+                font-size: 0.85rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .welcome-features {
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .welcome-features h3 {
+                font-size: 0.9rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .feature-item {
+                font-size: 0.8rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .feature-item svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .welcome-buttons {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .welcome-btn {
+                padding: 0.75rem 1.25rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Mobile pequeno */
+        @media (max-width: 480px) {
+            body {
+                padding: 0.75rem;
+            }
+
+            .welcome-container {
+                padding: 1.25rem;
+                border-radius: 12px;
+            }
+
+            .welcome-icon {
+                width: 48px;
+                height: 48px;
+                margin-bottom: 1rem;
+            }
+
+            .welcome-icon svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            .welcome-title {
+                font-size: 1.35rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 0.85rem;
+            }
+
+            .welcome-description {
+                font-size: 0.8rem;
+            }
+
+            .welcome-features {
+                padding: 0.875rem;
+            }
+
+            .welcome-features h3 {
+                font-size: 0.85rem;
+            }
+
+            .feature-item {
+                font-size: 0.75rem;
+            }
+
+            .welcome-btn {
+                padding: 0.7rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Ajustes para iframe */
+        @media (max-height: 800px) {
+            body {
+                padding: 1rem;
+                align-items: flex-start;
+                padding-top: 1rem;
+            }
+
+            .welcome-container {
+                margin-top: 1rem;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .welcome-features {
+                max-height: 200px;
+                overflow-y: auto;
+                margin-bottom: 1rem;
+            }
+
+            .welcome-description {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <div class="welcome-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+        </div>
+        
+        <h1 class="welcome-title">Bem-vindo ao Salesdever!</h1>
+        <p class="welcome-subtitle">Sua plataforma completa de automação de vendas</p>
+        
+        <p class="welcome-description">
+            O Salesdever é uma plataforma poderosa que ajuda você a automatizar suas vendas, 
+            gerenciar campanhas e acompanhar resultados em tempo real. Com inteligência artificial 
+            integrada, você pode aumentar sua produtividade e fechar mais negócios.
+        </p>
+
+        <div class="welcome-features">
+            <h3>O que você vai aprender no tour:</h3>
+            <div class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>Dashboard com métricas em tempo real</span>
+            </div>
+            <div class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>Criação e gerenciamento de campanhas</span>
+            </div>
+            <div class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>Assistentes de IA personalizados</span>
+            </div>
+            <div class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>Grazi Insights - Análises inteligentes</span>
+            </div>
+            <div class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>Gerenciamento de contatos e conversas</span>
+            </div>
+        </div>
+
+        <div class="welcome-buttons">
+            <button class="welcome-btn welcome-btn-primary" onclick="startTour()">
+                Sim, quero fazer o tour! 🚀
+            </button>
+            <button class="welcome-btn welcome-btn-secondary" onclick="skipTour()">
+                Pular por enquanto
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function startTour() {
+            // Marcar que o usuário quer fazer o tour
+            localStorage.setItem('onboarding_wants_tour', 'true');
+            localStorage.setItem('onboarding_reactivated', 'true');
+            localStorage.removeItem('onboarding_disabled');
+            localStorage.removeItem('onboarding_auto_show_disabled');
+            
+            // Marcar primeiro login como visto (usando o mesmo identificador do onboarding)
+            const tenantId = localStorage.getItem('tenant_id') || 'default';
+            const userKey = `onboarding_first_login_${tenantId}`;
+            if (!localStorage.getItem(userKey)) {
+                localStorage.setItem(userKey, 'true');
+                localStorage.setItem(`onboarding_first_login_date_${tenantId}`, new Date().toISOString());
+            }
+            
+            // Redirecionar o MENU PRINCIPAL INTEIRO para a página de demo
+            // Isso substitui completamente o sistema oficial pelo de teste
+            if (window.parent && window.parent !== window) {
+                // Está em iframe - redirecionar o parent (menu principal) inteiro
+                console.log('[Welcome] Redirecionando menu principal inteiro para demo...');
+                // Substituir 'menu.html' por 'onboarding-tutorial-demo-menu.html' no pathname
+                const parentPath = window.parent.location.pathname;
+                const newPath = parentPath.replace('menu.html', 'onboarding-tutorial-demo-menu.html');
+                window.parent.location.href = newPath;
+            } else {
+                // Está direto, redirecionar normalmente
+                const currentPath = window.location.pathname;
+                const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+                window.location.href = basePath + '/onboarding-tutorial-demo-menu.html';
+            }
+        }
+
+        function skipTour() {
+            // Marcar que o usuário não quer fazer o tour agora
+            localStorage.setItem('onboarding_wants_tour', 'false');
+            localStorage.setItem('onboarding_auto_show_disabled', 'true');
+            
+            // Marcar primeiro login como visto (usando o mesmo identificador do onboarding)
+            const tenantId = localStorage.getItem('tenant_id') || 'default';
+            const userKey = `onboarding_first_login_${tenantId}`;
+            if (!localStorage.getItem(userKey)) {
+                localStorage.setItem(userKey, 'true');
+                localStorage.setItem(`onboarding_first_login_date_${tenantId}`, new Date().toISOString());
+            }
+            
+            // Fechar a página de boas-vindas e voltar ao dashboard normal
+            if (window.parent && window.parent !== window) {
+                // Está em iframe, mudar src do iframe
+                const iframe = window.frameElement;
+                if (iframe && iframe.parentElement) {
+                    iframe.src = 'dashboard/dashboard.html';
+                }
+            } else {
+                window.location.href = 'dashboard/dashboard.html';
+            }
+        }
+
+        // NÃO marcar primeiro login aqui - só marcar quando o usuário clicar em um botão
+        // Isso permite que a mensagem apareça no primeiro acesso
+        console.log('[Welcome] ========================================');
+        console.log('[Welcome] ✅ Página de boas-vindas carregada!');
+        console.log('[Welcome] Aguardando interação do usuário...');
+        console.log('[Welcome] ========================================');
+        
+        // Verificar se está em iframe
+        if (window.parent !== window) {
+            console.log('[Welcome] Está sendo carregado em um iframe');
+        } else {
+            console.log('[Welcome] Está sendo carregado diretamente');
+        }
+    </script>
+</body>
+</html>

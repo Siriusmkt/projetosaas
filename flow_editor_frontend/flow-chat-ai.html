@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Editor AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+        }
+        
+        .message-user {
+            background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+        }
+        
+        .message-assistant {
+            background: white;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .dark .message-assistant {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .avatar-bot {
+            background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+        }
+        
+        .avatar-user {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+        }
+        
+        .btn-send {
+            background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+        }
+        
+        .btn-send:hover {
+            background: linear-gradient(135deg, #7e22ce 0%, #db2777 100%);
+        }
+        
+        .input-textarea {
+            border: 2px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+        
+        .input-textarea:focus {
+            border-color: #9333ea;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.1);
+        }
+        
+        .dark .input-textarea {
+            border-color: #334155;
+            background: #1e293b;
+        }
+        
+        .dark .input-textarea:focus {
+            border-color: #9333ea;
+            box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.2);
+        }
+        
+        .scroll-area {
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+        }
+        
+        .scroll-area::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .scroll-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        
+        .scroll-area::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        .pulse-dot {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .5;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+    <div id="app" class="h-screen flex flex-col">
+        <!-- Header -->
+        <header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm flex items-center justify-between px-6 flex-shrink-0 shadow-sm">
+            <div class="flex items-center gap-4">
+                <button 
+                    id="btnBack"
+                    class="h-9 w-9 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors flex items-center justify-center"
+                    onclick="window.history.back()"
+                >
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                </button>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl avatar-bot flex items-center justify-center shadow-lg">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-base font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                            Flow Editor AI
+                        </h1>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">
+                            Edite seu flow conversando com a IA
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="flowStatus" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <div class="w-2 h-2 rounded-full bg-green-500 pulse-dot"></div>
+                <span id="flowIdText" class="text-xs font-mono text-slate-600 dark:text-slate-300"></span>
+            </div>
+        </header>
+        
+        <!-- Chat Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <div id="chatArea" class="flex-1 px-4 py-6 overflow-y-auto scroll-area">
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <!-- Mensagens serão inseridas aqui -->
+                    <div class="flex gap-4 justify-start fade-in">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-xl avatar-bot flex items-center justify-center shadow-md ring-2 ring-purple-100 dark:ring-purple-900/50">
+                            <i data-lucide="bot" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div class="max-w-[75%] rounded-2xl rounded-tl-sm px-5 py-4 shadow-sm message-assistant">
+                            <div class="whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                                Olá! Sou sua assistente de IA para editar o flow. Posso ajudar você a:
+
+• Adicionar novos blocos
+• Modificar blocos existentes
+• Criar rotas e caminhos
+• Reordenar o fluxo
+• Remover blocos
+
+Como posso ajudar você hoje?
+                            </div>
+                            <div class="text-xs mt-3 text-slate-400 dark:text-slate-500" id="initialTime"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Input Area -->
+            <div class="border-t border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm p-5 shadow-lg">
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex gap-3 items-end">
+                        <div class="flex-1 relative">
+                            <textarea
+                                id="messageInput"
+                                placeholder="Descreva o que você quer fazer no flow... (ex: 'Adicione uma mensagem de boas-vindas que diz Olá')"
+                                class="w-full min-h-[70px] max-h-[150px] resize-none rounded-xl input-textarea px-4 py-3 text-sm"
+                                rows="3"
+                            ></textarea>
+                            <div id="loadingOverlay" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-xl">
+                                <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+                                    <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
+                                    <span>Carregando flow...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            id="btnSend"
+                            class="h-[70px] w-[70px] rounded-xl btn-send shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                            onclick="sendMessage()"
+                        >
+                            <i data-lucide="send" class="w-5 h-5 text-white"></i>
+                        </button>
+                    </div>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 mt-2 text-center">
+                        Pressione Enter para enviar • Shift+Enter para nova linha
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializar ícones Lucide
+        lucide.createIcons();
+        
+        // Definir hora inicial
+        document.getElementById('initialTime').textContent = new Date().toLocaleTimeString('pt-BR', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+        
+        // Estado da aplicação
+        let messages = [];
+        let isLoading = false;
+        let flowId = null;
+        
+        // Obter parâmetros da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const assistenteId = urlParams.get('assistente_id') || '';
+        const tenantId = urlParams.get('tenant_id') || localStorage.getItem('tenant_id') || '';
+        
+        // Carregar flow ao iniciar
+        if (assistenteId && tenantId) {
+            loadFlow();
+        }
+        
+        // Auto-scroll
+        function scrollToBottom() {
+            const chatArea = document.getElementById('chatArea');
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+        
+        // Carregar flow
+        async function loadFlow() {
+            try {
+                document.getElementById('loadingOverlay').classList.remove('hidden');
+                
+                const response = await fetch(
+                    `/api/flows/by-assistant/${assistenteId}?tenant_id=${encodeURIComponent(tenantId)}&create_if_missing=true`
+                );
+                
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar flow');
+                }
+                
+                const data = await response.json();
+                flowId = data.flow?.id || null;
+                
+                if (flowId) {
+                    document.getElementById('flowStatus').classList.remove('hidden');
+                    document.getElementById('flowIdText').textContent = flowId.slice(0, 8) + '...';
+                }
+                
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                
+                if (data.blocks && data.blocks.length > 0) {
+                    const blocksCount = data.blocks.length;
+                    const caminhosCount = data.blocks.filter(b => b.block_type === 'caminhos').length;
+                    
+                    addMessage('assistant', `Flow carregado! Encontrei ${blocksCount} blocos no flow atual, incluindo ${caminhosCount} blocos de caminhos.\n\nComo posso ajudar você a editar o flow?`);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar flow:', error);
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                alert('Erro ao carregar flow');
+            }
+        }
+        
+        // Adicionar mensagem ao chat
+        function addMessage(role, content) {
+            const chatArea = document.getElementById('chatArea');
+            const messagesContainer = chatArea.querySelector('.max-w-4xl');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex gap-4 ${role === 'user' ? 'justify-end' : 'justify-start'} fade-in`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = `flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center shadow-md ring-2 ${
+                role === 'assistant' 
+                    ? 'avatar-bot ring-purple-100 dark:ring-purple-900/50' 
+                    : 'avatar-user ring-slate-100 dark:ring-slate-800'
+            }`;
+            avatar.innerHTML = `<i data-lucide="${role === 'assistant' ? 'bot' : 'user'}" class="w-5 h-5 text-white"></i>`;
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = `max-w-[75%] rounded-2xl px-5 py-4 shadow-sm transition-all hover:shadow-md ${
+                role === 'user'
+                    ? 'message-user text-white rounded-tr-sm'
+                    : 'message-assistant rounded-tl-sm'
+            }`;
+            
+            const contentText = document.createElement('div');
+            contentText.className = `whitespace-pre-wrap text-sm leading-relaxed ${
+                role === 'user' ? 'text-white' : 'text-slate-700 dark:text-slate-200'
+            }`;
+            contentText.textContent = content;
+            
+            const timestamp = document.createElement('div');
+            timestamp.className = `text-xs mt-3 ${
+                role === 'user' ? 'text-white/70' : 'text-slate-400 dark:text-slate-500'
+            }`;
+            timestamp.textContent = new Date().toLocaleTimeString('pt-BR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            messageContent.appendChild(contentText);
+            messageContent.appendChild(timestamp);
+            
+            if (role === 'assistant') {
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(messageContent);
+            } else {
+                messageDiv.appendChild(messageContent);
+                messageDiv.appendChild(avatar);
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            lucide.createIcons();
+            scrollToBottom();
+            
+            messages.push({ role, content });
+        }
+        
+        // Enviar mensagem
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message || isLoading || !flowId) return;
+            
+            addMessage('user', message);
+            input.value = '';
+            
+            isLoading = true;
+            const btnSend = document.getElementById('btnSend');
+            btnSend.disabled = true;
+            btnSend.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 text-white animate-spin"></i>';
+            lucide.createIcons();
+            
+            // Mostrar indicador de carregamento
+            const chatArea = document.getElementById('chatArea');
+            const messagesContainer = chatArea.querySelector('.max-w-4xl');
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'flex gap-4 justify-start fade-in';
+            loadingDiv.innerHTML = `
+                <div class="flex-shrink-0 w-10 h-10 rounded-xl avatar-bot flex items-center justify-center shadow-md ring-2 ring-purple-100 dark:ring-purple-900/50">
+                    <i data-lucide="bot" class="w-5 h-5 text-white"></i>
+                </div>
+                <div class="message-assistant rounded-2xl rounded-tl-sm px-5 py-4 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="loader-2" class="w-4 h-4 animate-spin text-purple-600 dark:text-purple-400"></i>
+                        <span class="text-sm text-slate-600 dark:text-slate-300">Processando sua solicitação...</span>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(loadingDiv);
+            lucide.createIcons();
+            scrollToBottom();
+            
+            try {
+                const conversationHistory = messages.map(m => ({
+                    role: m.role,
+                    content: m.content
+                }));
+                
+                const response = await fetch(`/api/flows/${flowId}/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        conversation_history: conversationHistory,
+                        provider: 'openai'
+                    })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json().catch(() => ({ detail: 'Erro desconhecido' }));
+                    throw new Error(error.detail || 'Erro ao processar mensagem');
+                }
+                
+                const data = await response.json();
+                
+                // Remover indicador de carregamento
+                loadingDiv.remove();
+                
+                addMessage('assistant', data.message || 'Mudanças aplicadas com sucesso!');
+                
+                if (data.flow) {
+                    flowId = data.flow.id;
+                }
+                
+            } catch (error) {
+                console.error('Erro ao enviar mensagem:', error);
+                loadingDiv.remove();
+                addMessage('assistant', `Desculpe, ocorreu um erro: ${error.message}`);
+            } finally {
+                isLoading = false;
+                btnSend.disabled = false;
+                btnSend.innerHTML = '<i data-lucide="send" class="w-5 h-5 text-white"></i>';
+                lucide.createIcons();
+            }
+        }
+        
+        // Enter para enviar, Shift+Enter para nova linha
+        document.getElementById('messageInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        
+        // Inicializar scroll
+        scrollToBottom();
+    </script>
+</body>
+</html>
