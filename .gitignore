@@ -1,5 +1,6 @@
-.env
-.env.*
+# .env versionado a pedido (cópia exata do projeto)
+# .env
+# .env.*
 **/node_modules/
 **/.venv/
 **/__pycache__/
